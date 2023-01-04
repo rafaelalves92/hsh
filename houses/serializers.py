@@ -20,4 +20,5 @@ class HouseSerializer(serializers.ModelSerializer):
             "sell_price",
             "location_price",
             "description",
+            "is_available",
         ]

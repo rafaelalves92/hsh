@@ -13,6 +13,7 @@ class House(models.Model):
     sell_price = models.FloatField()
     location_price = models.FloatField()
     description = models.CharField(max_length=250)
+    is_available = models.BooleanField()
 
     address = models.OneToOneField(
         "addresses.Address",
