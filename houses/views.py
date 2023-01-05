@@ -1,27 +1,23 @@
-from rest_framework.views import APIView, status, Response, Request
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import House
 from .serializers import HouseSerializer
-from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveUpdateAPIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 
-class HouseView(APIView):
-    def get(self, request: Request) -> Response:
-        houses = House.objects.all()
+class HouseView(ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
-        serializer = HouseSerializer(houses, many=True)
+    serializer_class = HouseSerializer
+    queryset = House.objects.all()
 
-        return Response(serializer.data)
+class HouseDetailView(RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    def post(self, request: Request) -> Response:
-        serializer = HouseSerializer(data=request.data)
+    serializer_class = HouseSerializer
+    queryset = House.objects.all()
 
-        serializer.is_valid(raise_exception=True)
-
-        serializer.save()
-
-        return Response(serializer.data, status.HTTP_201_CREATED)
-
-class HouseDetailView(APIView):
-    ...
+    # Só falta fazer o soft delete
+    

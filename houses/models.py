@@ -14,6 +14,7 @@ class House(models.Model):
     location_price = models.FloatField()
     description = models.CharField(max_length=250)
     is_available = models.BooleanField()
+    user_id = models.IntegerField()
 
     address = models.OneToOneField(
         "addresses.Address",
@@ -21,11 +22,11 @@ class House(models.Model):
         related_name="address",
     )
 
-    user = models.ForeignKey(
-        "users.User",
-        on_delete=models.CASCADE,
-        related_name="announcement_house",
-    )
+    # user = models.ForeignKey(
+    #     "users.User",
+    #     on_delete=models.CASCADE,
+    #     related_name="announcement_house",
+    # )
 
     buyers = models.ManyToManyField(
         "users.User",
