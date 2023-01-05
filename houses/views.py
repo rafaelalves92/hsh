@@ -1,14 +1,15 @@
-from .models import House
-from .serializers import HouseSerializer
+from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
     ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
+    RetrieveUpdateDestroyAPIView,
 )
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from .models import House
 from .permissions import IsHouseOwnerOrRenter
+from .serializers import HouseRentSerializer, HouseSerializer
 
 
 class HouseView(ListCreateAPIView):
@@ -33,5 +34,11 @@ class HouseLocationView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsHouseOwnerOrRenter]
 
-    serializer_class = HouseSerializer
+    serializer_class = HouseRentSerializer
     queryset = House.objects.all()
+
+    def perform_create(self, serializer):
+        house_id = self.kwargs["house_id"]
+        house_obj = get_object_or_404(House, pk=house_id)
+
+        serializer.save(house=house_obj, renter=self.request.user)

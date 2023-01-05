@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
-from .models import House, LocationHouse
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
 from users.models import User
 from users.serializers import UserSerializer
+
+from .models import House, LocationHouse
 
 
 class HouseSerializer(serializers.ModelSerializer):
@@ -49,4 +50,8 @@ class HouseRentSerializer(serializers.ModelSerializer):
             "id",
             "start_at",
             "finish_at",
+            "house_id",
+            "renter_id",
         ]
+
+        read_only_fields = ["house_id", "renter_id"]
