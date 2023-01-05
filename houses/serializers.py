@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import House
+from .models import House, LocationHouse
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
 from users.models import User
@@ -39,3 +39,14 @@ class HouseSerializer(serializers.ModelSerializer):
         house_obj = House.objects.create(**validated_data, address=address)
 
         return house_obj
+
+
+class HouseRentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocationHouse
+
+        fields = [
+            "id",
+            "start_at",
+            "finish_at",
+        ]
