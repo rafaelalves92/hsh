@@ -31,6 +31,8 @@ class HouseSerializer(serializers.ModelSerializer):
             "user_id",
         ]
 
+        read_only_fields = ["user_id"]
+
     def create(self, validated_data):
 
         address_dict = validated_data.pop("address")
