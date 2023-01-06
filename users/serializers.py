@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             "is_superuser",
         ]
 
-        extra_kwargs = {"password": {"write_only": True}}
+        extra_kwargs = {"password": {"write_only": True},"is_superuser":{"read_only":True} }
     
     def create(self, validated_data: dict) -> User:
         if validated_data["is_superuser"]:
