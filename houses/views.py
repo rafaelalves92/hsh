@@ -7,10 +7,10 @@ from rest_framework.generics import (
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .models import House
+from .models import House, LocationHouse
 from .permissions import IsHouseOwnerOrRenter
 from .serializers import HouseRentSerializer, HouseSerializer
-from rest_framework.views import Response, Request, status
+from rest_framework.exceptions import NotAcceptable
 
 
 class HouseView(ListCreateAPIView):
@@ -43,6 +43,13 @@ class HouseLocationView(ListCreateAPIView):
         house_id = self.kwargs["house_id"]
         house_obj = get_object_or_404(House, pk=house_id)
 
-        serializer.save(house=house_obj, renter=self.request.user)
+        if not house_obj.is_available:
+            raise NotAcceptable("This house is not avaiable")
+        house_obj.is_available = False
+        house_obj.save()
 
+        serializer.save(house=house_obj, renter=self.request.user)
         self.check_object_permissions(self.request, house_obj)
+
+    def get_queryset(self):
+        return LocationHouse.objects.filter(renter_id=self.request.user.id)
