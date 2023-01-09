@@ -10,6 +10,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import House
 from .permissions import IsHouseOwnerOrRenter
 from .serializers import HouseRentSerializer, HouseSerializer
+from rest_framework.views import Response, Request, status
 
 
 class HouseView(ListCreateAPIView):
@@ -38,7 +39,10 @@ class HouseLocationView(ListCreateAPIView):
     queryset = House.objects.all()
 
     def perform_create(self, serializer):
+
         house_id = self.kwargs["house_id"]
         house_obj = get_object_or_404(House, pk=house_id)
 
         serializer.save(house=house_obj, renter=self.request.user)
+
+        self.check_object_permissions(self.request, house_obj)
