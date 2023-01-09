@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import House
+from .models import House,SellHouse
 
 
 class HouseSerializer(serializers.ModelSerializer):
@@ -22,3 +22,21 @@ class HouseSerializer(serializers.ModelSerializer):
             "description",
             "is_available",
         ]
+
+class SellHouseSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = SellHouse
+
+            fields = [
+                'id',
+                'buyed_at',
+                'house_id',
+                'buyer_id',
+             ]
+            read_only_fields = ['house_id','buyer_id']
+
+        
+
+
+
+
