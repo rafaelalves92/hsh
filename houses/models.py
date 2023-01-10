@@ -14,17 +14,13 @@ class House(models.Model):
     location_price = models.FloatField()
     description = models.CharField(max_length=250)
     is_available = models.BooleanField()
+    user_id = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
 
     address = models.OneToOneField(
         "addresses.Address",
         on_delete=models.CASCADE,
         related_name="address",
-    )
-
-    user = models.ForeignKey(
-        "users.User",
-        on_delete=models.CASCADE,
-        related_name="announcement_house",
     )
 
     buyers = models.ManyToManyField(
@@ -38,6 +34,10 @@ class House(models.Model):
         through="houses.LocationHouse",
         related_name="rented_houses",
     )
+
+    def soft_delete(self):
+        self.is_active = False
+        self.save()
 
 
 class SellHouse(models.Model):
@@ -55,16 +55,11 @@ class SellHouse(models.Model):
         related_name="buyer_house",
     )
 
-    # seller = models.ForeignKey(
-    #     "users.User",
-    #     on_delete=models.CASCADE,
-    #     related_name="seller_house",
-    # )
-
 
 class LocationHouse(models.Model):
     start_at = models.DateField()
     finish_at = models.DateField()
+    owner_id = models.IntegerField()
 
     house = models.ForeignKey(
         "houses.House",
@@ -77,9 +72,3 @@ class LocationHouse(models.Model):
         on_delete=models.CASCADE,
         related_name="renter_house",
     )
-
-    # owner = models.ForeignKey(
-    #     "users.User",
-    #     on_delete=models.CASCADE,
-    #     related_name="owner_house",
-    # )
