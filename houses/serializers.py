@@ -28,7 +28,12 @@ class HouseSerializer(serializers.ModelSerializer):
             "location_price",
             "description",
             "is_available",
+            "is_active",
             "address",
+            "user_id",
+        ]
+
+        read_only_fields = [
             "user_id",
         ]
 

@@ -1,16 +1,12 @@
+from .models import House, LocationHouse
+from .serializers import HouseSerializer, HouseRentSerializer
+from .permissions import isHouseOwner, IsHouseOwnerOrRenter
+from rest_framework.views import Response, status, Request
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import NotAcceptable
-from rest_framework.generics import (
-    ListCreateAPIView,
-    RetrieveUpdateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
-from .models import House, LocationHouse
-from .permissions import IsHouseOwnerOrRenter
-from .serializers import HouseRentSerializer, HouseSerializer
 
 
 class HouseView(ListCreateAPIView):
@@ -20,16 +16,25 @@ class HouseView(ListCreateAPIView):
     serializer_class = HouseSerializer
     queryset = House.objects.all()
 
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user.id)
+
 
 class HouseDetailView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly, isHouseOwner]
 
     serializer_class = HouseSerializer
     queryset = House.objects.all()
 
-    # Só falta fazer o soft delete
+    def delete(self, request: Request, pk: int) -> Response:
+        house_obj = get_object_or_404(House, pk=pk)
 
+        self.check_object_permissions(request, house_obj)
+        self.object = self.get_object()
+        self.object.soft_delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class HouseLocationView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
@@ -58,7 +63,4 @@ class HouseLocationView(ListCreateAPIView):
         )
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
-            return LocationHouse.objects.filter(owner_id=self.request.user.id)
-        else:
-            return LocationHouse.objects.filter(renter_id=self.request.user.id)
+        return LocationHouse.objects.filter(renter_id=self.request.user.id)
