@@ -52,6 +52,7 @@ class HouseRentSerializer(serializers.ModelSerializer):
             "finish_at",
             "house_id",
             "renter_id",
+            "owner_id",
         ]
 
-        read_only_fields = ["house_id", "renter_id"]
+        read_only_fields = ["house_id", "renter_id", "owner_id"]

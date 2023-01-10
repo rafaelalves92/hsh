@@ -22,12 +22,6 @@ class House(models.Model):
         related_name="address",
     )
 
-    # user = models.ForeignKey(
-    #     "users.User",
-    #     on_delete=models.CASCADE,
-    #     related_name="announcement_house",
-    # )
-
     buyers = models.ManyToManyField(
         "users.User",
         through="houses.SellHouse",
@@ -56,16 +50,11 @@ class SellHouse(models.Model):
         related_name="buyer_house",
     )
 
-    # seller = models.ForeignKey(
-    #     "users.User",
-    #     on_delete=models.CASCADE,
-    #     related_name="seller_house",
-    # )
-
 
 class LocationHouse(models.Model):
     start_at = models.DateField()
     finish_at = models.DateField()
+    owner_id = models.IntegerField()
 
     house = models.ForeignKey(
         "houses.House",
@@ -78,9 +67,3 @@ class LocationHouse(models.Model):
         on_delete=models.CASCADE,
         related_name="renter_house",
     )
-
-    # owner = models.ForeignKey(
-    #     "users.User",
-    #     on_delete=models.CASCADE,
-    #     related_name="owner_house",
-    # )
