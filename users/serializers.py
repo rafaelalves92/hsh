@@ -17,17 +17,16 @@ class UserSerializer(serializers.ModelSerializer):
             "city",
             "district",
             "is_superuser",
-            "is_superuser",
         ]
 
-        extra_kwargs = {"password": {"write_only": True},"is_superuser":{"read_only":True} }
-    
+        extra_kwargs = {"password": {"write_only": True}}
+
     def create(self, validated_data: dict) -> User:
         if validated_data["is_superuser"]:
-           return User.objects.create_superuser(**validated_data)
+            return User.objects.create_superuser(**validated_data)
         else:
-           return User.objects.create_user(**validated_data)  
-    
+            return User.objects.create_user(**validated_data)
+
     def update(self, instance: User, validated_data: dict) -> User:
         for key, value in validated_data.items():
             if key == "password":
