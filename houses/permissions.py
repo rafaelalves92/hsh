@@ -1,7 +1,12 @@
 from rest_framework.permissions import BasePermission
-from rest_framework.views import Request, View
-from houses.models import House
+from .models import House
+
+
+class IsHouseOwnerOrRenter(BasePermission):
+    def has_object_permission(self, request, view, house: House) -> bool:
+        return request.user.is_authenticated and house.user_id != request.user.id
+
 
 class isHouseOwner(BasePermission):
     def has_object_permission(self, request, view, house: House):
-        return house.user_id == request.user.id
+        return request.user.is_authenticated and house.user_id == request.user.id
