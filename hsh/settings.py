@@ -35,6 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["web-production-185d.up.railway.app/", "0.0.0.0"]
 
 
+
 # Application definition
 
 DJANGO_APPS = [
@@ -48,6 +49,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "drf_spectacular",
 ]
 
 MY_APPS = [
@@ -140,6 +142,17 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Home Sweet Home API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

@@ -37,11 +37,13 @@ class HouseDetailView(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class HouseLocationView(ListCreateAPIView):
+
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsHouseOwnerOrRenter]
 
     serializer_class = HouseRentSerializer
     queryset = House.objects.all()
+
 
     def perform_create(self, serializer):
 
@@ -62,5 +64,20 @@ class HouseLocationView(ListCreateAPIView):
             owner_id=house_obj.user_id,
         )
 
+
     def get_queryset(self):
         return LocationHouse.objects.filter(renter_id=self.request.user.id)
+
+    
+
+
+
+
+
+
+
+    
+
+
+
+

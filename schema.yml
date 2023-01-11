@@ -1,0 +1,728 @@
+openapi: 3.0.3
+info:
+  title: Home Sweet Home API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /api/houses/:
+    get:
+      operationId: houses_list
+      tags:
+      - houses
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/House'
+          description: ''
+    post:
+      operationId: houses_create
+      tags:
+      - houses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/House'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/House'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/House'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+          description: ''
+  /api/houses/{house_id}/rent/:
+    get:
+      operationId: houses_rent_list_2
+      parameters:
+      - in: path
+        name: house_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - houses
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HouseRent'
+          description: ''
+    post:
+      operationId: houses_rent_create_2
+      parameters:
+      - in: path
+        name: house_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - houses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HouseRent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HouseRent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HouseRent'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HouseRent'
+          description: ''
+  /api/houses/{id}:
+    get:
+      operationId: houses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - houses
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+          description: ''
+    put:
+      operationId: houses_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - houses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/House'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/House'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/House'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+          description: ''
+    patch:
+      operationId: houses_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - houses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedHouse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedHouse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedHouse'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+          description: ''
+    delete:
+      operationId: houses_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - houses
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/houses/rent/:
+    get:
+      operationId: houses_rent_list
+      tags:
+      - houses
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HouseRent'
+          description: ''
+    post:
+      operationId: houses_rent_create
+      tags:
+      - houses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HouseRent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HouseRent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HouseRent'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HouseRent'
+          description: ''
+  /api/users/:
+    get:
+      operationId: users_list
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: users_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/{id}/:
+    get:
+      operationId: users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/houses/{id}/:
+    get:
+      operationId: users_houses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+          description: ''
+  /api/users/login/:
+    post:
+      operationId: users_login_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        city:
+          type: string
+          maxLength: 50
+        district:
+          type: string
+          maxLength: 50
+        street:
+          type: string
+          maxLength: 50
+        number:
+          type: string
+          maxLength: 4
+        zipcode:
+          type: string
+          maxLength: 11
+      required:
+      - city
+      - district
+      - id
+      - number
+      - street
+      - zipcode
+    House:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        bedrooms:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        rooms:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        suits:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        kitchens:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        bathrooms:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        toilets:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        land_area:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        parking_spaces:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sell_price:
+          type: number
+          format: double
+        location_price:
+          type: number
+          format: double
+        description:
+          type: string
+          maxLength: 250
+        is_available:
+          type: boolean
+        is_active:
+          type: boolean
+        address:
+          $ref: '#/components/schemas/Address'
+        user_id:
+          type: integer
+          readOnly: true
+      required:
+      - address
+      - bathrooms
+      - bedrooms
+      - description
+      - id
+      - is_available
+      - kitchens
+      - land_area
+      - location_price
+      - parking_spaces
+      - rooms
+      - sell_price
+      - suits
+      - toilets
+      - user_id
+    HouseRent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start_at:
+          type: string
+          format: date
+        finish_at:
+          type: string
+          format: date
+        house_id:
+          type: integer
+          readOnly: true
+        renter_id:
+          type: integer
+          readOnly: true
+        owner_id:
+          type: integer
+          readOnly: true
+      required:
+      - finish_at
+      - house_id
+      - id
+      - owner_id
+      - renter_id
+      - start_at
+    PatchedHouse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        bedrooms:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        rooms:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        suits:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        kitchens:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        bathrooms:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        toilets:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        land_area:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        parking_spaces:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sell_price:
+          type: number
+          format: double
+        location_price:
+          type: number
+          format: double
+        description:
+          type: string
+          maxLength: 250
+        is_available:
+          type: boolean
+        is_active:
+          type: boolean
+        address:
+          $ref: '#/components/schemas/Address'
+        user_id:
+          type: integer
+          readOnly: true
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        phone_number:
+          type: string
+          maxLength: 11
+        city:
+          type: string
+          maxLength: 50
+        district:
+          type: string
+          maxLength: 50
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        phone_number:
+          type: string
+          maxLength: 11
+        city:
+          type: string
+          maxLength: 50
+        district:
+          type: string
+          maxLength: 50
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+      required:
+      - city
+      - district
+      - email
+      - id
+      - name
+      - password
+      - phone_number
+      - username
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
