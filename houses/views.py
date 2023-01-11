@@ -98,4 +98,4 @@ class GetSellHouseView(ListAPIView):
     queryset = SellHouse.objects.all()
 
     def get_queryset(self):
-        return LocationHouse.objects.filter(buyer_id=self.request.user.id)
+        return SellHouse.objects.filter(buyer_id = self.request.user.id)
