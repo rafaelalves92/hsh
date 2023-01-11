@@ -14,8 +14,7 @@ class House(models.Model):
     location_price = models.FloatField()
     description = models.CharField(max_length=250)
     is_available = models.BooleanField()
-    user_id = models.IntegerField(default=0)
-    is_active = models.BooleanField(default=True)
+    user_id = models.IntegerField()
 
     address = models.OneToOneField(
         "addresses.Address",
@@ -35,9 +34,6 @@ class House(models.Model):
         related_name="rented_houses",
     )
 
-    def soft_delete(self):
-        self.is_active = False
-        self.save()
 
 
 class SellHouse(models.Model):

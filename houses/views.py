@@ -67,7 +67,7 @@ class HouseLocationView(ListCreateAPIView):
 
 class SellHouseView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsHouseOwnerOrRenter]
     
     serializer_class = SellHouseSerializer
     queryset = SellHouse.objects.all()
