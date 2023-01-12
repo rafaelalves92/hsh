@@ -49,17 +49,20 @@ class SellHouse(models.Model):
         related_name="house_sold",
     )
 
+    owner_id = models.IntegerField()
+
     buyer = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
         related_name="buyer_house",
     )
 
+    sell_price = models.FloatField()
+
 
 class LocationHouse(models.Model):
     start_at = models.DateField()
     finish_at = models.DateField()
-    owner_id = models.IntegerField()
 
     house = models.ForeignKey(
         "houses.House",
@@ -67,8 +70,12 @@ class LocationHouse(models.Model):
         related_name="house_rented",
     )
 
+    owner_id = models.IntegerField()
+
     renter = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
         related_name="renter_house",
     )
+
+    location_price = models.FloatField()

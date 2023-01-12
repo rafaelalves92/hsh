@@ -1,5 +1,6 @@
 asgiref==3.6.0
 asttokens==2.2.1
+attrs==22.2.0
 backcall==0.2.0
 black==22.12.0
 Brotli==1.0.9
@@ -10,11 +11,14 @@ dj-database-url==1.2.0
 Django==4.1.5
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
+drf-spectacular==0.25.1
 executing==1.2.0
 gunicorn==20.1.0
+inflection==0.5.1
 ipdb==0.13.11
 ipython==8.8.0
 jedi==0.18.2
+jsonschema==4.17.3
 matplotlib-inline==0.1.6
 mypy-extensions==0.4.3
 parso==0.8.3
@@ -28,12 +32,15 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 Pygments==2.14.0
 PyJWT==2.6.0
+pyrsistent==0.19.3
 python-dotenv==0.21.0
 pytz==2022.7
+PyYAML==6.0
 six==1.16.0
 sqlparse==0.4.3
 stack-data==0.6.2
 traitlets==5.8.0
 tzdata==2022.7
+uritemplate==4.1.1
 wcwidth==0.2.5
 whitenoise==6.3.0
