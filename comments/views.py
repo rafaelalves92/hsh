@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .serializers import CommentsSerializer
 from .models import Comments
@@ -26,17 +26,21 @@ class CommentsDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Comments.objects.all()
 
 
-class CommentsHouseView(APIView):
-    def get(self, request: Request, house_id: int) -> Response:
-        comments = Comments.objects.filter(house_id=house_id)
-        serializer = CommentsSerializer(comments, many=True)
+class CommentsHouseView(ListAPIView):
+    serializer_class = CommentsSerializer
+    queryset = Comments.objects.all()
 
-        return Response(serializer.data)
+    def get_queryset(self):
+        house_id = self.kwargs["house_id"]
+
+        return Comments.objects.filter(house_id=house_id)
 
 
-class CommentsUserView(APIView):
-    def get(self, request: Request, user_id: int) -> Response:
-        comments = Comments.objects.filter(user_id=user_id)
-        serializer = CommentsSerializer(comments, many=True)
+class CommentsUserView(ListAPIView):
+    serializer_class = CommentsSerializer
+    queryset = Comments.objects.all()
 
-        return Response(serializer.data)
+    def get_queryset(self):
+        user_id = self.kwargs["user_id"]
+
+        return Comments.objects.filter(user_id=user_id)
