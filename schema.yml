@@ -48,7 +48,7 @@ paths:
           description: ''
   /api/houses/{house_id}/rent/:
     get:
-      operationId: houses_rent_list_2
+      operationId: houses_rent_list
       parameters:
       - in: path
         name: house_id
@@ -69,7 +69,7 @@ paths:
                   $ref: '#/components/schemas/HouseRent'
           description: ''
     post:
-      operationId: houses_rent_create_2
+      operationId: houses_rent_create
       parameters:
       - in: path
         name: house_id
@@ -198,7 +198,7 @@ paths:
           description: No response body
   /api/houses/rent/:
     get:
-      operationId: houses_rent_list
+      operationId: houses_rent_retrieve
       tags:
       - houses
       security:
@@ -208,34 +208,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/HouseRent'
-          description: ''
-    post:
-      operationId: houses_rent_create
-      tags:
-      - houses
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/HouseRent'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/HouseRent'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/HouseRent'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HouseRent'
+                $ref: '#/components/schemas/House'
           description: ''
   /api/users/:
     get:

@@ -2,7 +2,7 @@ from .models import House, LocationHouse
 from .serializers import HouseSerializer, HouseRentSerializer
 from .permissions import isHouseOwner, IsHouseOwnerOrRenter
 from rest_framework.views import Response, status, Request
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
@@ -36,13 +36,14 @@ class HouseDetailView(RetrieveUpdateDestroyAPIView):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class HouseLocationView(ListCreateAPIView):
+    
+
+class HouseLocationCreateView(CreateAPIView):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsHouseOwnerOrRenter]
 
     serializer_class = HouseRentSerializer
-    queryset = House.objects.all()
 
 
     def perform_create(self, serializer):
@@ -63,17 +64,18 @@ class HouseLocationView(ListCreateAPIView):
             renter=self.request.user,
             owner_id=house_obj.user_id,
         )
+        
 
+class HouseLocationListView(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+
+    permission_classes = [ IsAuthenticated, IsHouseOwnerOrRenter]
+
+    queryset = LocationHouse.objects.all()
+    serializer_class = HouseRentSerializer
 
     def get_queryset(self):
         return LocationHouse.objects.filter(renter_id=self.request.user.id)
-
-    
-
-
-
-
-
 
 
     
