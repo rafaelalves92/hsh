@@ -29,6 +29,9 @@ class UserHousesDetailView(APIView):
 
     permission_classes = [ IsAuthenticated, IsHouseOwner]
 
+    queryset = House
+    serializer_class = HouseSerializer
+
     def get(self, request: Request, id) -> Response:
         house= House.objects.filter(user_id = id)
         
