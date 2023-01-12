@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# "web-production-185d.up.railway.app/", "0.0.0.0",
+# "hsh-production.up.railway.app", "127.0.0.1",
 # "127.0.0.1"
 
 
@@ -58,6 +58,7 @@ MY_APPS = [
     "users",
     "houses",
     "addresses",
+    "comments"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
