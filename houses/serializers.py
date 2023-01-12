@@ -5,7 +5,7 @@ from addresses.serializers import AddressSerializer
 from users.models import User
 from users.serializers import UserSerializer
 
-from .models import House, LocationHouse
+from .models import House, LocationHouse, SellHouse
 
 
 class HouseSerializer(serializers.ModelSerializer):
@@ -56,8 +56,23 @@ class HouseRentSerializer(serializers.ModelSerializer):
             "start_at",
             "finish_at",
             "house_id",
-            "renter_id",
             "owner_id",
+            "renter_id",
+            "location_price",
         ]
 
-        read_only_fields = ["house_id", "renter_id", "owner_id"]
+        read_only_fields = ["house_id", "renter_id", "owner_id", "location_price"]
+
+
+class SellHouseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SellHouse
+        fields = [
+            "id",
+            "buyed_at",
+            "house_id",
+            "owner_id",
+            "buyer_id",
+            "sell_price",
+        ]
+        read_only_fields = ["house_id", "buyer_id", "owner_id", "sell_price"]

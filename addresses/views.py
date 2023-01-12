@@ -22,3 +22,9 @@ class AddressView(APIView):
         serializer.save()
 
         return Response(serializer.data, status.HTTP_201_CREATED)
+
+from rest_framework import generics
+
+class AddressView(generics.ListCreateAPIView):
+    serializer_class = AddressSerializer
+    queryset = Address.objects.all()
